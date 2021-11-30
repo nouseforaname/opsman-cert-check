@@ -126,7 +126,7 @@ source <(om bosh-env)
 
 #Assuming only opsman native deployments on director. $filter contains product guids separated by '\|' (== OR) in grep. -v is inverse match. Leaving deployments that are not a product which should be only service instances.
 #
-for S in `bosh --json ds | jq '.Tables[].Rows[].name' -r | grep -v $filter`; do
+for S in `bosh --json ds | jq '.Tables[].Rows[].name' -r | grep -v "$filter"`; do
   echo -e "Checking Service Deployment: $(color green "$S")"
 
   CERT_DATA=$( jq ".[] | select( .variable_path == \"/opsmgr/bosh_dns/san_migrated\" and .product_guid == \"$S\" )" <<< ${CERTS} )
